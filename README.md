@@ -19,7 +19,7 @@
 
 ## 示例
 
-![示例](example.jpg)
+<img src="example.jpg" width="300" />
 
 ## 配合使用
 
