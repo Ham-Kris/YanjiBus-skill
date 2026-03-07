@@ -32,12 +32,16 @@ down_stations = re.findall(r'id=\"bus-down-(\d+)\".*?bus-line-name\">([^<]+)', h
 
 print('=== 站点信息 ===')
 if up_stations:
-    print('【上行站点】')
+    up_first = up_stations[0][1]
+    up_last = up_stations[-1][1]
+    print(f'【上行站点】({up_first} → {up_last})')
     for num, name in up_stations:
         print(f'  {num}. {name}')
 print()
 if down_stations:
-    print('【下行站点】')
+    down_first = down_stations[0][1]
+    down_last = down_stations[-1][1]
+    print(f'【下行站点】({down_first} → {down_last})')
     for num, name in down_stations:
         print(f'  {num}. {name}')
 
@@ -58,25 +62,32 @@ try:
     up_map = {num: name for num, name in up_stations}
     down_map = {num: name for num, name in down_stations}
 
+    up_dir = ''
+    down_dir = ''
+    if up_stations:
+        up_dir = f'({up_stations[0][1]} → {up_stations[-1][1]})'
+    if down_stations:
+        down_dir = f'({down_stations[0][1]} → {down_stations[-1][1]})'
+
     if up_buses:
-        print(f'【上行在途车辆: {len(up_buses)}辆】')
+        print(f'【上行在途车辆: {len(up_buses)}辆】{up_dir}')
         for b in up_buses:
             snum = str(b['stationnum'])
             sname = up_map.get(snum, '未知站点')
             print(f'  -> 第{snum}站 [{sname}] 附近 | 速度:{b[\"speed\"]}km/h | 时间:{b[\"time\"]}')
     else:
-        print('【上行: 暂无在途车辆】')
+        print(f'【上行: 暂无在途车辆】{up_dir}')
 
     print()
 
     if down_buses:
-        print(f'【下行在途车辆: {len(down_buses)}辆】')
+        print(f'【下行在途车辆: {len(down_buses)}辆】{down_dir}')
         for b in down_buses:
             snum = str(b['stationnum'])
             sname = down_map.get(snum, '未知站点')
             print(f'  -> 第{snum}站 [{sname}] 附近 | 速度:{b[\"speed\"]}km/h | 时间:{b[\"time\"]}')
     else:
-        print('【下行: 暂无在途车辆】')
+        print(f'【下行: 暂无在途车辆】{down_dir}')
 except Exception as e:
     print(f'解析失败: {e}')
 " <<< "$ROUTE_HTML"
