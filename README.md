@@ -17,6 +17,10 @@
 
 详见 [.claude/skills/yanji-bus.md](.claude/skills/yanji-bus.md)。
 
+## 示例
+
+![示例](example.jpg)
+
 ## 配合使用
 
 可搭配 [高德地图 skill](https://github.com/kaichen/amap-skill) 实现完整出行体验：查找目的地、步行导航到站点、实时查车、下车后导航到目的地。
